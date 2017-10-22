@@ -302,6 +302,17 @@ public class ForwardedHeaderFilterTests {
 	}
 
 	@Test
+	public void sendRedirectWhenRequestUrlHasQueryString() throws Exception {
+		this.request.addHeader(X_FORWARDED_PROTO, "https");
+		this.request.addHeader(X_FORWARDED_HOST, "example.com");
+		this.request.addHeader(X_FORWARDED_PORT, "443");
+		this.request.setQueryString("key=value");
+
+		String redirectedUrl = sendRedirect("/foo/bar?newkey=newvalue#hash");
+		assertEquals("https://example.com/foo/bar?newkey=newvalue#hash", redirectedUrl);
+	}
+
+	@Test
 	public void sendRedirectWithContextPath() throws Exception {
 		this.request.addHeader(X_FORWARDED_PROTO, "https");
 		this.request.addHeader(X_FORWARDED_HOST, "example.com");

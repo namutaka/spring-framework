@@ -332,6 +332,7 @@ public class ForwardedHeaderFilter extends OncePerRequestFilter {
 
 			String result = UriComponentsBuilder
 					.fromHttpRequest(new ServletServerHttpRequest(this.request))
+					.replaceQuery("")
 					.replacePath(path)
 					.build().normalize().toUriString();
 
